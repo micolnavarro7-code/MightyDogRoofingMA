@@ -711,6 +711,7 @@
                                 <input type="hidden" id="utm_medium" name="utm_medium">
                                 <input type="hidden" id="utm_campaign" name="utm_campaign">
                                 <input type="hidden" id="utm_term" name="utm_term">
+                                <input type="hidden" name="gclid" id="gclid_field">
 
                                 <button type="submit" class="form-submit mt-2">
                                     <svg class="icon mr-2"><use href="#i-clipboard"/></svg> Get Free Estimate
@@ -858,6 +859,16 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
+        // GCLID Capture — save to cookie + populate hidden field
+        (function(){
+            var p=new URLSearchParams(window.location.search);
+            var gclid=p.get('gclid');
+            if(gclid){document.cookie="gclid="+gclid+";max-age=2592000;path=/";}
+            function getCookie(n){var m=document.cookie.match(new RegExp('(^| )'+n+'=([^;]+)'));return m?m[2]:'';}
+            var f=document.getElementById('gclid_field');
+            if(f)f.value=getCookie('gclid');
+        })();
+
         // UTM Capture
         (function(){var p=new URLSearchParams(window.location.search);['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id'].forEach(function(f){var v=p.get(f);if(v){var el=document.getElementById(f);if(el)el.value=v;}});})();
 
